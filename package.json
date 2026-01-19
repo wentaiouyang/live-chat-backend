@@ -1,11 +1,14 @@
 {
   "name": "live-chat-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec babel-node index.js"
+    "dev": "nodemon --exec babel-node index.js",
+    "docker:build": "docker build -t live-chat-backend .",
+    "docker:run": "docker run -p 3001:3000 --env-file .env live-chat-backend"
   },
   "repository": {
     "type": "git",
@@ -14,7 +17,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/wentaiouyang/live-chat-backend/issues"
   },
@@ -24,9 +26,14 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.0",
     "morgan": "^1.10.1",
+    "nodemailer": "^7.0.6",
     "serverless-http": "^4.0.0",
+    "socket.io": "^4.8.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0"
   },
   "devDependencies": {
