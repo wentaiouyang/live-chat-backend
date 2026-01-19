@@ -1,6 +1,6 @@
 // server.js
-require('dotenv').config();
-import init from './loaders';
+import 'dotenv/config';
+import init from './loaders/index.js';
 import express from 'express';
 import serverless from 'serverless-http';
 
