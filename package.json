@@ -8,7 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node index.js",
     "docker:build": "docker build -t live-chat-backend .",
-    "docker:run": "docker run -p 3001:3000 --env-file .env live-chat-backend"
+    "docker:run": "docker run -p 3001:3000 --env-file .env live-chat-backend",
+    "docker:ecr:login": "aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 309908491550.dkr.ecr.ap-southeast-2.amazonaws.com",
+    "docker:ecr:tag": "docker tag live-chat-backend:latest 309908491550.dkr.ecr.ap-southeast-2.amazonaws.com/live-chat-backend:latest",
+    "docker:ecr:push": "docker push 309908491550.dkr.ecr.ap-southeast-2.amazonaws.com/live-chat-backend:latest",
+    "docker:ecr:all": "npm run docker:build && npm run docker:ecr:tag && npm run docker:ecr:login && npm run docker:ecr:push"
   },
   "repository": {
     "type": "git",
