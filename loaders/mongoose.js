@@ -40,7 +40,11 @@ async function connectDB() {
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      logger.info(`Database <ChatApp> connected`);
+      try {
+        logger.info(`Database <ChatApp> connected`);
+      } catch (e) {
+        console.log(`Database <ChatApp> connected`);
+      }
       return mongoose;
     });
   }
@@ -49,7 +53,11 @@ async function connectDB() {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    logger.error(`Database connection error: ${e.message}`);
+    try {
+      logger.error(`Database connection error: ${e.message}`);
+    } catch (logErr) {
+      console.error(`Database connection error: ${e.message}`);
+    }
     throw e;
   }
 
@@ -57,8 +65,11 @@ async function connectDB() {
 }
 
 // For traditional server environments, connect immediately
-if (process.env.VERCEL !== '1') {
-  connectDB();
+// In Vercel/serverless, connect on first request
+if (process.env.VERCEL !== '1' && !process.env.VERCEL) {
+  connectDB().catch((err) => {
+    console.error('Failed to connect to database on startup:', err.message);
+  });
 }
 
 export default connectDB;
